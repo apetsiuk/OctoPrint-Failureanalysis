@@ -1,11 +1,8 @@
-<img align="left" width="50" src="_images/octoprint_logo.png"/>
+<img align="left" width="60" src="_images/octoprint_logo.png"/>
 
 # OctoPrint-Failureanalysis
 
-*OctoPrint: Failure Analysis Plugin.* Monocular computer vision-based layer-wise FFF 3D printing analysis
-
-- [Setting up OctoPrint on Windows](https://community.octoprint.org/t/setting-up-octoprint-on-windows/383)
-- [Plugin Tutorial](https://docs.octoprint.org/en/master/plugins/gettingstarted.html)
+**OctoPrint Failure Analysis Plugin.** Monocular computer vision-based layer-wise FFF 3D printing analysis
 
 
 ## Setup
@@ -14,6 +11,11 @@ Install via the bundled [Plugin Manager](https://docs.octoprint.org/en/master/bu
 or manually using this URL:
 
     https://github.com/apetsiuk/OctoPrint-Failureanalysis/archive/master.zip
+
+
+- [Setting up OctoPrint on Windows](https://community.octoprint.org/t/setting-up-octoprint-on-windows/383)
+- [Plugin Tutorial](https://docs.octoprint.org/en/master/plugins/gettingstarted.html)
+
 
 ```
 $ cd ~/devel
