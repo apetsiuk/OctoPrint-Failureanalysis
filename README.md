@@ -1,8 +1,12 @@
+<img align="left" width="50" src="_images/octoprint_logo.png"/>
+
 # OctoPrint-Failureanalysis
 
-test
+*OctoPrint: Failure Analysis Plugin.* Monocular computer vision-based layer-wise FFF 3D printing analysis
 
-**TODO:** Describe what your plugin does.
+- [Setting up OctoPrint on Windows](https://community.octoprint.org/t/setting-up-octoprint-on-windows/383)
+- [Plugin Tutorial](https://docs.octoprint.org/en/master/plugins/gettingstarted.html)
+
 
 ## Setup
 
@@ -11,8 +15,22 @@ or manually using this URL:
 
     https://github.com/apetsiuk/OctoPrint-Failureanalysis/archive/master.zip
 
-**TODO:** Describe how to install your plugin, if more needs to be done than just installing it via pip or through
-the plugin manager.
+```
+$ cd ~/devel
+$ git clone https://github.com/OctoPrint/OctoPrint
+[...]
+$ cd OctoPrint
+$ virtualenv venv
+[...]
+$ source venv/bin/activate
+(venv) $ pip install -e '.[develop,plugins]'
+[...]
+(venv) $ octoprint --help
+Usage: octoprint [OPTIONS] COMMAND [ARGS]...
+
+[...]
+```
+
 
 ## Configuration
 
