@@ -1,15 +1,35 @@
 # coding=utf-8
 from __future__ import absolute_import
 
-### (Don't forget to remove me)
-# This is a basic skeleton for your plugin's __init__.py. You probably want to adjust the class name of your plugin
-# as well as the plugin mixins it's subclassing from. This is really just a basic skeleton to get you started,
-# defining your plugin as a template plugin, settings and asset plugin. Feel free to add or remove mixins
-# as necessary.
-#
-# Take a look at the documentation on what other plugin mixins are available.
+import os
+import sys
+import argparse
+import logging
+
+import re
+import requests, base64
+import urllib.request
+
+import time
+import flask
+import numpy as np 
+import cv2
+import threading
+import subprocess
+import json
+from time import sleep
+from time import time
 
 import octoprint.plugin
+import octoprint.events
+import octoprint.util
+
+
+UPLOAD_FREQ_S = 10
+OCTO_AR_DIR = 'C:/devel/OctoPrint/OctoPrint-Failureanalysis/_synth_references/'  
+sys.path.append(OCTO_AR_DIR)
+
+
 
 class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
     octoprint.plugin.AssetPlugin,

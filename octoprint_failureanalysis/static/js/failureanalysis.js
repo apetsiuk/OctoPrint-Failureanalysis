@@ -22,8 +22,8 @@ $(function() {
     OCTOPRINT_VIEWMODELS.push({
         construct: FailureanalysisViewModel,
         // ViewModels your plugin depends on, e.g. loginStateViewModel, settingsViewModel, ...
-        dependencies: [ /* "loginStateViewModel", "settingsViewModel" */ ],
+        dependencies: [ "settingsViewModel"/* "loginStateViewModel",  */ ],
         // Elements to bind to, e.g. #settings_plugin_failureanalysis, #tab_plugin_failureanalysis, ...
-        elements: [ /* ... */ ]
+        elements: [ "#settings_plugin_Failureanalysis", "#tab_plugin_Failureanalysis"/* ... */ ]
     });
 });

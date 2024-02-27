@@ -1,0 +1,56 @@
+
+<div class="div_ar_section_header"><h5>Camera stream (AR + Segmentation)</h5></div>
+
+
+
+<img data-bind="attr: {src: 'http://127.0.0.1:27100/stream/' + settingsViewModel.settings.plugins.Failureanalysis.stream()}"></img>
+
+
+<div class="div_ar_statistics_header"><h4>Print Statistics</h4></div>
+
+
+
+
+<p style="color: #386942"><b><i>...Layer image saved</i></b></p>
+
+<canvas id="headCanvas_proc" width="1000"></canvas>
+
+<p><b id="filename">Filename:</b></p>
+<p><b id="layer" >Layer: </b></p>
+
+<p>&nbsp;</p>
+<p style="color: #386942"><b><i>...Layer image saved</i></b></p>
+
+{% set layer_num="X" %}
+
+<table>
+    <tr>
+	    <td><div class="div_ar_section_header"><h5>Side view</h5></div></td>
+	</tr>
+	<tr>
+	    <td><canvas id="headCanvas" width="1000" height="333"></canvas></td>
+	</tr>
+</table>
+
+
+<table>
+    <tr>
+	    <td><div class="div_ar_section_header"><h5>Real (virtual top)</h5></div></td>
+	    <td><div class="div_ar_section_header"><h5>Synth (virtual top)</h5></div></td>
+	</tr>
+    <tr>
+	    <td>
+        {% set real_layer_image = 'real_image_Layer_'+layer_num+'.png' %}
+<img src="/plugin/ARPrintVisualizer/static/images/{{ real_layer_image }}" height=50px/>
+	    </td>
+	    <td>
+        {% set synth_layer_image = 'synth_image_Layer_'+layer_num+'.png' %}
+<img src="/plugin/ARPrintVisualizer/static/images/{{ synth_layer_image }}" height=50px/>
+	    </td>
+	</tr>
+	
+
+
+</table>
+
+
