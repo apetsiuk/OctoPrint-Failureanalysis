@@ -1,4 +1,9 @@
 # coding=utf-8
+
+
+# http://127.0.0.1:8081/stream/0/640/480
+
+
 from __future__ import absolute_import
 
 import os
@@ -32,10 +37,57 @@ sys.path.append(OCTO_AR_DIR)
 
 
 class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
-    octoprint.plugin.AssetPlugin,
-    octoprint.plugin.TemplatePlugin
-):
+                            octoprint.plugin.AssetPlugin,
+                            octoprint.plugin.TemplatePlugin,
+                            
+                            octoprint.plugin.StartupPlugin,
+                            octoprint.plugin.ShutdownPlugin,
+                            octoprint.plugin.BlueprintPlugin,
+                            octoprint.plugin.EventHandlerPlugin,
+                            ):
+                            
+    T1_INTERVAL = 5.0
+    T2_INTERVAL = 7.0
+    
+    
+    def __init__(self):
+        self._process = None
+        self._thread = None
+        self._thread_stop = threading.Event()
+        self._cam_server_path = "\_cam_stream\\ar_cam.py"
+        
+        
+    def initialize(self):
+        pass
 
+
+    ##########################################################
+    ##~~ StartupPlugin mixin
+    def on_startup(self, host, port):
+        """
+        Starts the AR Cam Flask server on octoprint server startup
+        """
+        try:
+            log_file = open("flask_log.txt", "w")            
+            script_abs_path = os.path.dirname(__file__) + self._cam_server_path
+            self._process = subprocess.Popen([sys.executable, script_abs_path], stdout=log_file, stderr=log_file)
+
+            time.sleep(2)
+            if self._process.poll() is None:
+                print("Cam server started successfully.")
+            else:
+                print("Error while starting the Flask server. Check the log file for details.")
+            log_file.close()
+        except Exception as e:
+            self._logger.info("ARPrintVisualizer failed to start")
+            self._logger.info(e)
+        return
+        
+        
+    def on_after_startup(self):
+        print('on_after_startup')
+    
+    
     ##~~ SettingsPlugin mixin
 
     def get_settings_defaults(self):
@@ -62,7 +114,7 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
         # for details.
         return {
             "failureanalysis": {
-                "displayName": "Failureanalysis Plugin",
+                "displayName": "Failureanalysis",
                 "displayVersion": self._plugin_version,
 
                 # version check: github repository
@@ -80,7 +132,7 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
 # If you want your plugin to be registered within OctoPrint under a different name than what you defined in setup.py
 # ("OctoPrint-PluginSkeleton"), you may define that here. Same goes for the other metadata derived from setup.py that
 # can be overwritten via __plugin_xyz__ control properties. See the documentation for that.
-__plugin_name__ = "Failureanalysis Plugin"
+__plugin_name__ = "Failureanalysis"
 
 
 # Set the Python version your plugin is compatible with below. Recommended is Python 3 only for all new plugins.

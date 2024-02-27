@@ -1,1 +1,64 @@
 /* TODO: Have your plugin's CSS files generated to here. */
+
+
+
+
+#settings_plugin_Failureanalysis input[type="text"] {
+    width: 80%;
+}
+
+#tab_plugin_Failureanalysis img{
+    min-height: 300px;
+    min-width: 90%;
+    border: 1px solid #333333;
+    margin-bottom: 10px;
+}
+
+#tab_plugin_Failureanalysis .btn {
+    margin: 10px;
+}
+
+.div_ar_section_header {
+	background-color: #dddddd; 
+}
+
+.div_ar_statistics_header {
+	background-color: #dddddd; 
+}
+
+
+
+.div_ar_field_text {
+	background-color: #663366; 
+    height: 100px;
+    width: 100px;
+}
+
+.table_stats {
+	width: 100%;
+	padding: 0px;
+}
+
+.td_stat_param {
+	width: 20%;
+	color: #000000;
+	font-weight: bold;
+}
+
+.td_stat_value {
+	width: 20%;
+	margin-right: auto;
+	color: #11358a;
+	text-align: "left";
+	font-weight: bold;
+}
+
+
+
+table {
+	width: 100%;
+}
+
+td {
+	padding: 0px 5px;
+}
