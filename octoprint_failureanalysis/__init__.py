@@ -56,9 +56,13 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
         self._thread_stop = threading.Event()
         self._cam_server_path = "\_cam_stream\\ar_cam.py"
         
+        self._timer_print_stats= None
+        self._interval_print_stats=None
+        
         
     def initialize(self):
-        pass
+        self._interval_print_stats=self._settings.get_float(["T1_INTERVAL"])
+
 
 
     ##########################################################
