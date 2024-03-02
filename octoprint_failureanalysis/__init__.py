@@ -29,6 +29,8 @@ import octoprint.plugin
 import octoprint.events
 import octoprint.util
 
+import fullcontrol as fc
+
 
 UPLOAD_FREQ_S = 10
 OCTO_AR_DIR = 'C:/devel/OctoPrint/OctoPrint-Failureanalysis/_synth_references/'  
@@ -62,7 +64,8 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
         
     def initialize(self):
         self._interval_print_stats=self._settings.get_float(["T1_INTERVAL"])
-
+        self._timer_print_stats=octoprint.util.RepeatedTimer(self.T1_INTERVAL, self._stats_update)
+        self._timer_print_stats.start()
 
 
     ##########################################################
@@ -132,6 +135,15 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
             }
         }
 
+    #################################################
+    def _stats_update(self):
+        self._logger.info("_stats_update called")
+        print("_stats_update")
+        steps = []
+        steps.append(fc.Point(x=10, y=10, z=0))
+        steps.append(fc.Point(x=20))
+        steps.append(fc.Point(x=10, y=20))
+        print(fc.transform(steps, 'gcode'))
 
 # If you want your plugin to be registered within OctoPrint under a different name than what you defined in setup.py
 # ("OctoPrint-PluginSkeleton"), you may define that here. Same goes for the other metadata derived from setup.py that
