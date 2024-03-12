@@ -3,7 +3,7 @@
 
 
 
-<img data-bind="attr: {src: 'http://127.0.0.1:27100/stream/' + settingsViewModel.settings.plugins.Failureanalysis.stream()}"></img>
+<img data-bind="attr: {src: 'http://127.0.0.1:27100/stream/' + settingsViewModel.settings.plugins.failureanalysis.stream()}"></img>
 
 
 <div class="div_ar_statistics_header">Print Statistics</div>
@@ -48,9 +48,22 @@
 <img src="/plugin/ARPrintVisualizer/static/images/{{ synth_layer_image }}" height=50px/>
 	    </td>
 	</tr>
-	
-
-
 </table>
 
+
+<div class="button-container">
+	<button id="detection" class="btn" data-bind="disable: isErrorDetected(), click: toggleDetection, css : { 'btn-success': !isDetecting(), 'btn-danger': isDetecting() }">
+		Start Error Detection
+	</button>
+</div>
+<div class="button-container">
+	<button id="resume" class="btn btn-primary" data-bind="enable: isErrorDetected(), click: resume">
+		Resume without Patch
+	</button>
+</div>
+<div class="button-container">
+	<button id="patchResume" class="stop btn btn-primary" data-bind="enable: isErrorDetected(), click: patchResume">
+		Insert Patch and Resume
+	</button>
+</div>
 

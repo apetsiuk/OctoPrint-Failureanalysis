@@ -1,13 +1,8 @@
-/* TODO: Have your plugin's CSS files generated to here. */
-
-
-
-
 #settings_plugin_Failureanalysis input[type="text"] {
     width: 80%;
 }
 
-#tab_plugin_Failureanalysis img{
+#tab_plugin_Failureanalysis img {
     min-height: 300px;
     min-width: 90%;
     border: 1px solid #333333;

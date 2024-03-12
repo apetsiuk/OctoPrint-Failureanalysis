@@ -9,7 +9,7 @@ def ar(input):
     Returns the augmented input image
     """
     octoprint_settings = Settings()
-    plugin_identifier = "Failureanalysis"
+    plugin_identifier = "failureanalysis"
     aruco_type = octoprint_settings.get(["plugins", plugin_identifier, "aruco_type"])
     if aruco_type is None:
         aruco_type = "DICT_6X6_250"

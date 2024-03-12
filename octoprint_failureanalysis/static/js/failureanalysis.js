@@ -46,8 +46,21 @@ $(function() {
 		}
 		
 		self.onDataUpdaterPluginMessage = function(plugin, data) {
-			if (plugin != "Failureanalysis") {
+			if (plugin != "failureanalysis") {
                 return;
+            }
+			
+			if (data.type == "error") {
+                new PNotify({
+                    title: 'Error Detected',
+                    text: data.error,
+                    type: 'error',
+                    hide: false
+                });
+
+                $("#detection").text("Start Error Detection");
+                self.isDetecting(false);
+                self.isErrorDetected(true);
             }
 				
 			$('.stat_model').css("font-weight", "bold");
@@ -68,7 +81,7 @@ $(function() {
 			$('.stat_failed_area').text(data.failed_area);
 			$('.stat_failure_location').css("font-weight", "bold");
 			$('.stat_failure_location').text(data.failure_location);
-			}
+		}
 
         self._headCanvas = document.getElementById('headCanvas');
         self._headCanvas_proc = document.getElementById('headCanvas_proc');
@@ -96,7 +109,7 @@ $(function() {
 	    self._getImage3 = function (imagetype) {
             $.ajax({
                 //url: PLUGIN_BASEURL + "visualizer/get-image?imagetype=" + imagetype,
-				url: "/plugin/Failureanalysis/get-image?imagetype=" + imagetype,
+				url: "/plugin/failureanalysis/get-image?imagetype=" + imagetype,
                 type: "GET",
                 dataType: "json",
                 contentType: "application/json; charset=UTF-8",
@@ -125,9 +138,7 @@ $(function() {
      */
     OCTOPRINT_VIEWMODELS.push({
         construct: FailureanalysisViewModel,
-        // ViewModels your plugin depends on, e.g. loginStateViewModel, settingsViewModel, ...
-        dependencies: [ "settingsViewModel"/* "loginStateViewModel",  */ ],
-        // Elements to bind to, e.g. #settings_plugin_failureanalysis, #tab_plugin_failureanalysis, ...
-        elements: [ "#settings_plugin_Failureanalysis", "#tab_plugin_Failureanalysis"/* ... */ ]
+        dependencies: [ "settingsViewModel"],
+        elements: [ "#settings_plugin_Failureanalysis", "#tab_plugin_Failureanalysis"]
     });
 });

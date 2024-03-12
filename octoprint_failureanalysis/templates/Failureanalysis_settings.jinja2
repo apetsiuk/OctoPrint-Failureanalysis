@@ -3,7 +3,7 @@
     <div class="control-group">
 		<label class="control-label" for="settings-arCamUrl">{{ _('Stream URL') }}</label>
 		<div class="controls">
-			<input type="text" class="input-block-level" data-bind="value: settingsViewModel.settings.plugins.Failureanalysis.stream, valueUpdate: 'afterkeydown'" placeholder="http://example.com/video.mjpg" id="settings-arCamUrl">
+			<input type="text" class="input-block-level" data-bind="value: settingsViewModel.settings.plugins.failureanalysis.stream, valueUpdate: 'afterkeydown'" placeholder="http://example.com/video.mjpg jfjfjf" id="settings-arCamUrl">
 			<span class="help-block">
 				<p>{{ _('The URL of the stream to use for the AR.') }}</p>
 			</span>
@@ -13,7 +13,7 @@
 	<div class="control-group">
 		<label class="control-label" for="settings-ArucoType">{{ _("ArUco Markers' Dictionary") }}</label>
 		<div class="controls">
-			<input type="text" class="input-block-level" data-bind="value: settingsViewModel.settings.plugins.Failureanalysis.aruco_type, valueUpdate: 'afterkeydown'" value="DICT_6X6_250" id="settings-ArucoType" >
+			<input type="text" class="input-block-level" data-bind="value: settingsViewModel.settings.plugins.failureanalysis.aruco_type, valueUpdate: 'afterkeydown'" value="DICT_6X6_250" id="settings-ArucoType" >
 			<span class="help-block">
 				<p>{{ _('The Dictionary type you used to print the ArUco Markers from.') }}</p>
 			</span>
