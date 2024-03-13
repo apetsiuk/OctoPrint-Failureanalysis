@@ -64,7 +64,15 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
         self._timer_print_stats= None
         self._interval_print_stats=None
         
+        self.layer_number = -1
+        
         self.img = None
+        self.img_synth_ref = None
+        self.img_real_layer = None
+        self.img_heatmap_comparison = None
+        self.img_xray_tensor = None
+        self.img_detected_error = None
+        self.img_generated_patch = None
         
         
     def initialize(self):
@@ -125,40 +133,7 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
             stream="",
             aruco_dict="DICT_6X6_250",
         )
-
-    ##########################################################################################################
-    
         
-        
-        
-    @octoprint.plugin.BlueprintPlugin.route("/get-image", methods=["GET"])
-    def get_image(self):
-        RESOLUTION_FRONT = (853, 480)
-        result = ""
-        if "imagetype" in flask.request.values:
-            im_type = flask.request.values["imagetype"]
-            self.img = self.read_img()
-            self.img = cv2.resize(self.img, RESOLUTION_FRONT, interpolation=cv2.INTER_AREA)
-            retval, buffer = cv2.imencode('.jpg', self.img)
-            try:
-                result = flask.jsonify(
-                    src="data:image/{0};base64,{1}".format(
-                        ".jpg",
-                        str(base64.b64encode(buffer), "utf-8"))
-                )
-            except IOError:
-                result = flask.jsonify(
-                    error="Unable to fetch img"
-                )
-        return flask.make_response(result, 200)
-    
-    
-    def read_img(self):
-        self.img = cv2.imread('C:/devel/OctoPrint-ARPrintVisualizer/octoprint_ARPrintVisualizer/blender_images/aruco_1.jpg')
-        return self.img
-    ##########################################################################################################
-
-
 
     ##~~ TemplatePlugin mixin
     def get_template_configs(self):
@@ -303,6 +278,56 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
         print(fc.transform(steps, 'gcode'))
         '''
         
+    #################################################  
+    @octoprint.plugin.BlueprintPlugin.route("/get-image", methods=["GET"])
+    def get_image(self):
+        result = ""
+        if "imagetype" in flask.request.values:
+            im_type = flask.request.values["imagetype"]
+            self.img = self.read_img()
+            retval, buffer = cv2.imencode('.jpg', self.img)
+            try:
+                result = flask.jsonify(
+                    src="data:image/{0};base64,{1}".format(
+                        ".jpg",
+                        str(base64.b64encode(buffer), "utf-8"))
+                )
+            except IOError:
+                result = flask.jsonify(
+                    error="Unable to fetch img"
+                )
+        return flask.make_response(result, 200)
+    
+    
+    def read_img(self):
+        #RESOLUTION_FRONT = (853, 480)
+        RESOLUTION_FRONT = (53, 80)
+        self.img = cv2.imread('C:/devel/OctoPrint-ARPrintVisualizer/octoprint_ARPrintVisualizer/blender_images/aruco_1.jpg')
+        self.img = cv2.resize(self.img, RESOLUTION_FRONT, interpolation=cv2.INTER_AREA)
+        return self.img
+    #************************************************
+    @octoprint.plugin.BlueprintPlugin.route("/get-image-synth-reference", methods=["GET"])
+    def get_image_synth_reference(self):
+        result = ""
+        if "imagetype" in flask.request.values:
+            im_type = flask.request.values["imagetype"]
+            self.img = self.read_image_synth_reference()
+            retval, buffer = cv2.imencode('.jpg', self.img)
+            try:
+                result = flask.jsonify(src="data:image/{0};base64,{1}".format(".jpg",str(base64.b64encode(buffer), "utf-8")))
+            except IOError:
+                result = flask.jsonify(error="Unable to fetch img")
+        return flask.make_response(result, 200)
+    
+    
+    def read_image_synth_reference(self):
+        #RESOLUTION_FRONT = (853, 480)
+        RESOLUTION_FRONT = (200, 200)
+        self.img = cv2.imread('C:/devel/OctoPrint/OctoPrint-Failureanalysis/octoprint_failureanalysis/_synth_layered_references/gcode_001_image_L0030.png')
+        self.img = cv2.resize(self.img, RESOLUTION_FRONT, interpolation=cv2.INTER_AREA)
+        return self.img
+    
+    
     #################################################
     
 

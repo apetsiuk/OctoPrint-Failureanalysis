@@ -46,9 +46,7 @@
         {% set real_layer_image = 'real_image_Layer_'+layer_num+'.png' %}
 <img src="/plugin/failureanalysis/static/images/{{ real_layer_image }}" height=50px/>
 	    </td>
-	    <td>
-        {% set synth_layer_image = 'synth_image_Layer_'+layer_num+'.png' %}
-<img src="/plugin/failureanalysis/static/images/{{ synth_layer_image }}" height=50px/>
+	    <td><canvas id="canvas_synth_ref" width="1000" height="333"></canvas>
 	    </td>
 	</tr>
 </table>

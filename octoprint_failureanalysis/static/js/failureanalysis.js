@@ -86,6 +86,8 @@ $(function() {
         self._headCanvas = document.getElementById('headCanvas');
         self._headCanvas_proc = document.getElementById('headCanvas_proc');
 		
+		self._canvas_synth_ref = document.getElementById('canvas_synth_ref');
+		
 		self._drawImage = function (img, canv, break_cache = false) {
             var ctx = canv.getContext("2d");
             var localimg = new Image();
@@ -122,14 +124,33 @@ $(function() {
                 }
             });
         };
+		
+		self._get_image_synth_reference = function (imagetype) {
+            $.ajax({
+                url: PLUGIN_BASEURL + "failureanalysis/get-image-synth-reference?imagetype=" + imagetype,
+				//url: "/plugin/failureanalysis/get-image?imagetype=" + imagetype,
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json; charset=UTF-8",
+                // data: JSON.stringify({"sens_thresh" : self.sens_thresh}),
+                success: function (response) {
+                    console.log('succ');
+                    if (response.hasOwnProperty("src")) {
+                        self._drawImage(response.src, self._canvas_synth_ref);
+                    }
+                }
+            });
+        };
+		
      
         setInterval(function () {
             self._getImage3('BIM');
         }, 1000)
 		
-		
-
-
+		setInterval(function () {
+            self._get_image_synth_reference('BIM');
+        }, 1000)
+	
     }
 
     /* view model class, parameters for constructor, container to bind to
