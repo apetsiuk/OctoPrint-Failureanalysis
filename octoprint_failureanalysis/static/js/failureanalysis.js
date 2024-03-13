@@ -20,7 +20,7 @@ $(function() {
 	
 			self.stat_model=$('<span class="stat_model"></span>');
 			self.stat_layer=$('<span class="stat_layer"></span>');
-			self.stat_nozzle_xyz=$('<span class="stat_nozzle_xyz"></span>');
+			self.stat_nozzle_z=$('<span class="stat_nozzle_z"></span>');
 			self.stat_print_status=$('<span class="stat_print_status"></span>');
 			self.stat_detection_status=$('<span class="stat_detection_status"></span>');
 			self.stat_similarity=$('<span class="stat_similarity"></span>');
@@ -33,7 +33,7 @@ $(function() {
 			stat_container.insertAfter($('.div_ar_statistics_header'));
 			stat_container.append("Model: ", self.stat_model, "<br/>");
 			stat_container.append("Layer: ", self.stat_layer, "<br/>");
-			stat_container.append("Nozzle XYZ: ", self.stat_nozzle_xyz, "<br/>");
+			stat_container.append("Nozzle Z: ", self.stat_nozzle_z, "<br/>");
 			stat_container.append("Print status: ", self.stat_print_status, "<br/>");
 			stat_container.append("Detection status: ", self.stat_detection_status, "<br/>");
 			stat_container.append("Similarity: ", self.stat_similarity, "<br/>");
@@ -67,8 +67,8 @@ $(function() {
 			$('.stat_model').text(data.model);
 			$('.stat_layer').css("font-weight", "bold");
 			$('.stat_layer').text(data.layer);
-			$('.stat_nozzle_xyz').css("font-weight", "bold");
-			$('.stat_nozzle_xyz').text(data.nozzle_xyz);
+			$('.stat_nozzle_z').css("font-weight", "bold");
+			$('.stat_nozzle_z').text(data.nozzle_z);
 			$('.stat_print_status').css("font-weight", "bold");
 			$('.stat_print_status').text(data.print_status);
 			$('.stat_detection_status').css("font-weight", "bold");

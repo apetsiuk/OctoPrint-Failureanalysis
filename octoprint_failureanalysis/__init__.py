@@ -228,7 +228,7 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
         print("_stats_update")
         stat_model = None
         stat_layer = None
-        stat_nozzle_xyz = None
+        stat_nozzle_z = None
         stat_print_status = None
         stat_detection_status = "N/A"
         stat_similarity = "N/A"
@@ -240,6 +240,10 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
             user_name = self.get_user_name()
             stat_model = self.get_print_name()
             stat_print_status = self.get_printer_state()
+            
+            #self._logger.info(self._printer.get_current_data())
+            self._logger.info(self._printer._currentZ)
+            stat_nozzle_z = str(self._printer._currentZ)
             
             #stat_model = "adsdsd"
             #stat_print_status = "sdvsdv"
@@ -261,7 +265,7 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
         self._plugin_manager.send_plugin_message(self._identifier,
         {"model": stat_model, 
          "layer": stat_layer,
-         "nozzle_xyz": stat_nozzle_xyz,
+         "nozzle_z": stat_nozzle_z,
          "print_status": stat_print_status,
          "detection_status": stat_detection_status,
          "similarity": stat_similarity,
@@ -287,15 +291,9 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
             self.img = self.read_img()
             retval, buffer = cv2.imencode('.jpg', self.img)
             try:
-                result = flask.jsonify(
-                    src="data:image/{0};base64,{1}".format(
-                        ".jpg",
-                        str(base64.b64encode(buffer), "utf-8"))
-                )
+                result = flask.jsonify(src="data:image/{0};base64,{1}".format(".jpg",str(base64.b64encode(buffer), "utf-8")))
             except IOError:
-                result = flask.jsonify(
-                    error="Unable to fetch img"
-                )
+                result = flask.jsonify(error="Unable to fetch img")
         return flask.make_response(result, 200)
     
     
@@ -306,6 +304,8 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
         self.img = cv2.resize(self.img, RESOLUTION_FRONT, interpolation=cv2.INTER_AREA)
         return self.img
     #************************************************
+    
+    
     @octoprint.plugin.BlueprintPlugin.route("/get-image-synth-reference", methods=["GET"])
     def get_image_synth_reference(self):
         result = ""
