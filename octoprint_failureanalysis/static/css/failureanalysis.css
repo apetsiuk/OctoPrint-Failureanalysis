@@ -13,6 +13,20 @@
     margin: 10px;
 }
 
+#tab_plugin_Failureanalysis div.mjpg_container {
+	display: inline;
+	border: 1px solid #333333;
+	background-color: #ccff66; 
+}
+
+
+.div_ar_field_text {
+	background-color: #663366; 
+    height: 100px;
+    width: 100px;
+}
+
+
 .div_ar_section_header {
 	background-color: #dddddd; 
 }

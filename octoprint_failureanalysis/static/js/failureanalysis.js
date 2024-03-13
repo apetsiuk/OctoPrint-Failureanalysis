@@ -108,8 +108,8 @@ $(function() {
 	
 	    self._getImage3 = function (imagetype) {
             $.ajax({
-                //url: PLUGIN_BASEURL + "visualizer/get-image?imagetype=" + imagetype,
-				url: "/plugin/failureanalysis/get-image?imagetype=" + imagetype,
+                url: PLUGIN_BASEURL + "failureanalysis/get-image?imagetype=" + imagetype,
+				//url: "/plugin/failureanalysis/get-image?imagetype=" + imagetype,
                 type: "GET",
                 dataType: "json",
                 contentType: "application/json; charset=UTF-8",

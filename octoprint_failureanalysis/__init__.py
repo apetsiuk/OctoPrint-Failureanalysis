@@ -2,6 +2,7 @@
 
 
 # http://127.0.0.1:8081/stream/0/640/480
+# http://127.0.0.1:27100/stream/0/640/480
 
 
 from __future__ import absolute_import
@@ -57,7 +58,7 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
         self._process = None
         self._thread = None
         self._thread_stop = threading.Event()
-        self._cam_server_path = "\_cam_stream\\ar_cam.py"
+        self._cam_server_path = "\cam_stream\\ar_cam.py"
         self.api_key = ""
         
         self._timer_print_stats= None
@@ -82,7 +83,9 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
             log_file = open("flask_log.txt", "w")
             print(log_file)
             script_abs_path = os.path.dirname(__file__) + self._cam_server_path
-            #script_abs_path = str("c:/devel/octoprint/OctoPrint-Failureanalysis/octoprint_failureanalysis/_cam_stream/ar_cam.py")
+            #script_abs_path = str("c:\devel\octoprint\OctoPrint-Failureanalysis\octoprint_failureanalysis\cam_stream\\ar_cam.py")
+
+            print('\n\nscript_abs_path=\n', os.path.dirname(__file__))
             print('\n\nscript_abs_path=\n', script_abs_path)
             self._process = subprocess.Popen([sys.executable, script_abs_path], stdout=log_file, stderr=log_file)
 
@@ -124,7 +127,7 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
         )
 
     ##########################################################################################################
-        
+    
         
         
         
@@ -148,7 +151,11 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
                     error="Unable to fetch img"
                 )
         return flask.make_response(result, 200)
-
+    
+    
+    def read_img(self):
+        self.img = cv2.imread('C:/devel/OctoPrint-ARPrintVisualizer/octoprint_ARPrintVisualizer/blender_images/aruco_1.jpg')
+        return self.img
     ##########################################################################################################
 
 
@@ -187,7 +194,7 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
         # for details.
         return {
             "failureanalysis": {
-                "displayName": "failureanalysis",
+                "displayName": "Failureanalysis",
                 "displayVersion": self._plugin_version,
 
                 # version check: github repository
@@ -233,8 +240,7 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
     def get_printer_state(self):
         url = "http://localhost:5000/api/printer?exclude=temperature,sd"
         # self._logger.info('d')
-        #r = requests.get(url=url, headers={"X-Api-Key": str(self.api_key)}).json()
-        r = requests.get(url=url, headers={"X-Api-Key": str('D9C0F790AF78441FBBDF56BDD42C2E59')}).json()
+        r = requests.get(url=url, headers={"X-Api-Key": str(self.api_key)}).json()
         print_state = None
         if 'state' in r:
             print_state = r['state']['text']
@@ -299,9 +305,7 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
         
     #################################################
     
-    def read_img(self):
-        self.img = cv2.imread('C:/devel/OctoPrint-ARPrintVisualizer/octoprint_ARPrintVisualizer/blender_images/aruco_0.jpg')
-        return self.img
+
 
 # If you want your plugin to be registered within OctoPrint under a different name than what you defined in setup.py
 # ("OctoPrint-PluginSkeleton"), you may define that here. Same goes for the other metadata derived from setup.py that
@@ -313,7 +317,7 @@ __plugin_name__ = "failureanalysis"
 # OctoPrint 1.4.0 - 1.7.x run under both Python 3 and the end-of-life Python 2.
 # OctoPrint 1.8.0 onwards only supports Python 3.
 __plugin_pythoncompat__ = ">=3,<4"  # Only Python 3
-#__plugin_implementation__ = FailureanalysisPlugin()
+__plugin_implementation__ = FailureanalysisPlugin()
 
 
 def __plugin_load__():

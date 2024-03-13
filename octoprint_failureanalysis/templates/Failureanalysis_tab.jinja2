@@ -1,15 +1,18 @@
 
-<div class="div_ar_section_header">Camera stream (AR + Segmentation)</div>
+<div class="div_ar_section_header"><h5>Camera stream (AR + Segmentation)</h5></div>
 
+<div class="mjpg_container" >
+		<img data-bind="attr: {src: cam_url, width: cam_width, height: cam_height}">
+		</img>
+</div>
 
-
-<img data-bind="attr: {src: 'http://127.0.0.1:27100/stream/' + settingsViewModel.settings.plugins.failureanalysis.stream()}"></img>
+<img data-bind="attr: {src: 'http://127.0.0.1:27100/stream/0/640/480' }"></img>
 
 
 <div class="div_ar_statistics_header">Print Statistics</div>
 
 
-
+<div class="div_ar_field_text">cascasc</div>
 
 <p style="color: #386942"><b><i>...Layer image saved</i></b></p>
 
@@ -41,29 +44,13 @@
     <tr>
 	    <td>
         {% set real_layer_image = 'real_image_Layer_'+layer_num+'.png' %}
-<img src="/plugin/ARPrintVisualizer/static/images/{{ real_layer_image }}" height=50px/>
+<img src="/plugin/failureanalysis/static/images/{{ real_layer_image }}" height=50px/>
 	    </td>
 	    <td>
         {% set synth_layer_image = 'synth_image_Layer_'+layer_num+'.png' %}
-<img src="/plugin/ARPrintVisualizer/static/images/{{ synth_layer_image }}" height=50px/>
+<img src="/plugin/failureanalysis/static/images/{{ synth_layer_image }}" height=50px/>
 	    </td>
 	</tr>
 </table>
 
-
-<div class="button-container">
-	<button id="detection" class="btn" data-bind="disable: isErrorDetected(), click: toggleDetection, css : { 'btn-success': !isDetecting(), 'btn-danger': isDetecting() }">
-		Start Error Detection
-	</button>
-</div>
-<div class="button-container">
-	<button id="resume" class="btn btn-primary" data-bind="enable: isErrorDetected(), click: resume">
-		Resume without Patch
-	</button>
-</div>
-<div class="button-container">
-	<button id="patchResume" class="stop btn btn-primary" data-bind="enable: isErrorDetected(), click: patchResume">
-		Insert Patch and Resume
-	</button>
-</div>
 
