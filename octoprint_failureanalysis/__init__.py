@@ -64,7 +64,7 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
         self._timer_print_stats= None
         self._interval_print_stats=None
         
-        self.layer_number = -1
+        self.layer_num = -1
         
         self.img = None
         self.img_synth_ref = None
@@ -227,7 +227,7 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
         self._logger.info("_stats_update called")
         print("_stats_update")
         stat_model = None
-        stat_layer = None
+        stat_layer = self.layer_num
         stat_nozzle_z = None
         stat_print_status = None
         stat_detection_status = "N/A"
@@ -283,6 +283,23 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
         '''
         
     #################################################  
+    @octoprint.plugin.BlueprintPlugin.route("/set-layer-num", methods=["GET"])
+    def set_layer_num(self):
+        try:
+            self.layer_num = flask.request.values["layer"]
+        except Exception as e:
+            self._logger.info("Plugin error")
+            self._logger.info(e)
+        return flask.jsonify(layer=f'{self.layer_num}')
+
+
+    @octoprint.plugin.BlueprintPlugin.route("/get-layer-num", methods=["GET"])
+    def get_layer_num(self):
+        return flask.jsonify(layer=f'{self.layer_num}')
+    
+    
+    
+    
     @octoprint.plugin.BlueprintPlugin.route("/get-image", methods=["GET"])
     def get_image(self):
         result = ""

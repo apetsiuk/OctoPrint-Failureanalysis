@@ -142,9 +142,33 @@ $(function() {
             });
         };
 		
+		
+		self.layer_num = 0
+        // document.getElementById("layer").innerHTML = `${0}`;
+        self._getPrintLayer = function () {
+            $.ajax({
+                url: PLUGIN_BASEURL + "failureanalysis/get-layer-num",
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json; charset=UTF-8",
+                //data: JSON.stringify(data),
+                success: function (response) {
+                    if (response.hasOwnProperty("layer")) {
+                        self.layer_num = response.layer
+                        // self.ui_layerInfo(response.layer)
+                        document.getElementById("layer").innerHTML = `Layer: ${response.layer}`;
+                    }
+                    if (response.hasOwnProperty("error")) {
+                        response.error;
+                    }
+                }
+            });
+        };
+		
      
         setInterval(function () {
             self._getImage3('BIM');
+			self._getPrintLayer();
         }, 1000)
 		
 		setInterval(function () {
