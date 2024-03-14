@@ -245,6 +245,9 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
             self._logger.info(self._printer._currentZ)
             stat_nozzle_z = str(self._printer._currentZ)
             
+            #read_image_synth_reference()
+            print("\n\n\nself.layer_num=", self.layer_num)
+            
             #stat_model = "adsdsd"
             #stat_print_status = "sdvsdv"
             
@@ -338,10 +341,17 @@ class FailureanalysisPlugin(octoprint.plugin.SettingsPlugin,
     
     
     def read_image_synth_reference(self):
+        self.img = None
         #RESOLUTION_FRONT = (853, 480)
         RESOLUTION_FRONT = (200, 200)
-        self.img = cv2.imread('C:/devel/OctoPrint/OctoPrint-Failureanalysis/octoprint_failureanalysis/_synth_layered_references/gcode_001_image_L0030.png')
-        self.img = cv2.resize(self.img, RESOLUTION_FRONT, interpolation=cv2.INTER_AREA)
+        # Layer number format = L0001
+        self.img = cv2.imread('C:/devel/OctoPrint/OctoPrint-Failureanalysis/octoprint_failureanalysis/_synth_layered_references/gcode_001_image_L'+str(self.layer_num).zfill(4) + '.png')
+        if(self.img is None):
+            
+            self.img = cv2.imread('C:/devel/OctoPrint/OctoPrint-Failureanalysis/octoprint_failureanalysis/image_placeholder.png')
+        else:
+            self.img = cv2.resize(self.img, RESOLUTION_FRONT, interpolation=cv2.INTER_AREA)
+        print("\n\n\nself.layer_num=", self.layer_num)
         return self.img
     
     
