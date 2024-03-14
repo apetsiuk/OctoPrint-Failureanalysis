@@ -6,7 +6,7 @@ __copyright__ = "Copyright (C) 2013 David Braam, Gina Häußge & others - Releas
 The code in this file is based on Cura.util.machineCom from the Cura project from late 2012
 (https://github.com/daid/Cura).
 """
-
+import requests
 import contextlib
 import copy
 import fnmatch
@@ -4411,6 +4411,44 @@ class MachineCom:
             return True
 
     def _sendCommand(self, cmd, cmd_type=None, on_sent=None, tags=None):
+        cmd_str = str(cmd)
+        print(f'sending in _sendCommand= {cmd_str}')
+
+        if cmd_str.find('M118 layer_num:') != -1:
+            # examples
+            API_KEY = '...'
+            
+            #def get_print_name():
+            #    url = "http://localhost:8080/api/job"
+            #    r = requests.get(url=url, headers={"X-Api-Key": API_KEY}).json()
+            #    print_state = None
+            #    if 'job' in r:
+            #        print_state = r['job']['file']['name']
+            #    return print_state
+            # TODO : check the port number and the plugin ID
+            def put_layer_num(layer_num):
+                url = f"http://localhost:5000/plugin/failureanalysis/set-layer-num?layer={layer_num}"
+                print(f'sending to {url} layer_num:{layer_num}')
+                # self._logger.info('d')
+                requests.get(url=url, headers={"X-Api-Key": API_KEY})
+            #print_name = get_print_name()
+            layer_num = int(cmd_str[len('M118 layer_num:'):])
+
+            #             import requests
+            #             PLUGIN_BASEURL + "gridcam/upload_static_file?controls=" + controls,
+            #             url = 'localhost:8080/api/resource/123'
+            #             data = {'key': 'value'}  # Your data to be sent in the PUT request
+            #
+            #             response = requests.put(url, json=data)
+
+            put_layer_num(layer_num)
+            #print(f'layer_num:{layer_num}, {print_name}')
+            print(f'layer_num:{layer_num}')
+#             self.setPause(True)
+            from time import sleep
+#             print('sleep')
+#             sleep(45) #seconds
+#             self.setPause(False)
         # Make sure we are only handling one sending job at a time
         with self._sendingLock:
             if self._serial is None:
